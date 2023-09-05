@@ -5,3 +5,7 @@ Necesito poder comprara los precios de diferentes supermercados	Con la finalidad
 Necesito que los precios sean precisos.	Con la finalidad de que el usuario pueda ir con seguridad que le alcanzará el presupuesto	•	Agregar una fecha de actualización o través de comentarios de otros clientes indicando que el precio es el correcto
 Necesito alertas de ofertas	Con la finalidad de ir a comprar el producto	•	Configuración de alertas del producto que el usuario esté buscando
 Necesito tener disponible la mayor cantidad de comercios	Con la finalidad de comparar precios	•	Identificar web con protección a scrapping y a también las webs con valores dinámicos y fijos.
+
+* Que contenga un filtro para poder encontrar mas rapido el producto.
+* Que contenga un historico del cambio de precio.
+* que muestre los valores mas bajos en el panel de general de los productos.
