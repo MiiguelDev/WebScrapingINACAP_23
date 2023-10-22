@@ -1,0 +1,31 @@
+
+    /* Estilos para centrar el contenido */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff; /* Color de fondo */
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    /* Estilos para los resultados */
+    .result {
+        background-color: #90c894; /* Color de fondo del resultado */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    #imagen_tallarines {
+        width: 50%;
+        height: 50%;;
+    }
