@@ -3,7 +3,7 @@ en caso de ya existir lo activas usando "venv/Scripts/activate".
 No inclui la carpeta "venv" que guarda las dependencias porque en teoria deberia crearse con "python -m venv venv", si tiene algun 
 incoveniente me avisan para agregarla.
 luego abrir un terminal y ejecutar "pip install -r requirements.txt" en el directorio raiz del proyecto 
-para instalar todas las dependencias, esto instalara dentro del proyecto las bibliotecas necesarias
+para instalar todas las dependencias, esto instalara dentro del proyecto las bibliotecas necesarias (ESTO DEBO REVISARLO OTRA VEZ, LAS DEPENDENCIAS NECESARIAS CAMBIARON)
 
 Para ejecutar el proyecto debe ir a una terminal en el directorio raiz y ejecutar "python app.py" para ejecutar flask 
 Dentro de la info que les muestra la terminal les dara una direccion ip que deben ejecutar haciendo Ctrl+click izquierdo o 

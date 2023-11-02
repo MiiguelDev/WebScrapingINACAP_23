@@ -3,14 +3,18 @@ from selenium_ejemplo import scrap_product_info
 
 app = Flask(__name__)
 
+# Definimos la pagina de inicio "/" indica que es la raiz del proyecto.
 @app.route('/')
 def home():
     return render_template('home.html')
 
 @app.route('/tallarines')
 def mostrar_precio_tallarines():
+    # Codigo de prueba, los parametros deberan ser extraido por json, momentaneamente
+    # se ingresaran de manera manual. Eventualmente aca ira la logica de negocio que
+    # devolvera el valor mas bajo resultante de la consulta
     supermercados = ["Lider"]
-    producto = "Fideo Spaghetti N° 5 400 Gr"
+    producto = ["Fideo Spaghetti N° 5 400 Gr"]
     urls = ["https://www.lider.cl/supermercado/product/sku/576170/Lider-Spaghetti-5"]
     selectores = ['pdp-mobile-sales-price']
     imagen_producto = ['https://dipy.cl/cdn/shop/products/cl_z108025_500x.jpg?v=1661811374']

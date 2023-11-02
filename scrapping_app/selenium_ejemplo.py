@@ -59,28 +59,5 @@ def scrap_product_info(supermercados, producto, urls, selectores, imagenes):
 
     return resultados
 
-# Ejemplo de uso
-# supermercados = ["Lider"]
-# producto = "Fideo Spaghetti N° 5 400 Gr"
-# urls = ["https://www.lider.cl/supermercado/product/sku/576170/Lider-Spaghetti-5"]
-# selectores = ['pdp-mobile-sales-price']
-
-# resultados = scrap_product_info(supermercados, producto, urls, selectores)
-# print(resultados)
-
-# if resultados:
-#     for resultado in resultados:
-#         print("ID:", resultado["ID"])
-#         print("Supermercado:", resultado["Supermercado"])
-#         print("Precio:", resultado["Precio"])
-#         print("URL:", resultado["URL"])
-
-#     # Guarda los resultados en un archivo JSON
-#     with open("resultados.json", "w") as json_file:
-#         json.dump(resultados, json_file, indent=4)
-#     print("Resultados guardados en 'resultados.json'")
-# else:
-#     print("No se encontro info.")
-
 
 
