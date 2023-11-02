@@ -8,13 +8,13 @@
 <body>
     <div class="container">
         <div class="result">
-            <h1>Fideo Spaghetti Bolsa 400 Gr N5
-            </h1>
-            <img id="imagen_tallarines" src="https://dipy.cl/cdn/shop/products/cl_z108025_500x.jpg?v=1661811374">
-            <p>Supermercado: {{ resultado["Supermercado"] }}</p>
-            <p>Precio Mas Bajo: ${{ resultado["Precio"] }}</p>
-            <p>Link: {{ resultado["URL"][:28] }}</p>
+            <h1>Fideo Spaghetti Bolsa 400 Gr N5</h1>
+            <img id="imagen_tallarines" src="{{ resultados[0]['Imagen']}}">
+            <p>Supermercado: {{ resultados[0]["Supermercado"] }}</p>
+            <p>Precio Mas Bajo: ${{ resultados[0]["Precio"] }}</p>
+            <p>Link: <a href="{{ resultados[0]["URL"] }}" noreferrer target="_blank">{{ resultados[0]["URL"][:28] }}</a></p>
         </div>
     </div>
 </body>
 </html>
+

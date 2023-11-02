@@ -18,7 +18,7 @@
 
     /* Estilos para los resultados */
     .result {
-        background-color: #90c894; /* Color de fondo del resultado */
+        background-color: #a3a5a3; /* Color de fondo del resultado */
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -26,6 +26,6 @@
     }
 
     #imagen_tallarines {
-        width: 50%;
-        height: 50%;;
+        width: 90%;
+        height: 90%;;
     }
