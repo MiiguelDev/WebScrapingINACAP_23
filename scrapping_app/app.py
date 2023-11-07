@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 from selenium_ejemplo import scrap_product_info
+from data_scrapping import data;
+import json
 
 app = Flask(__name__)
 
@@ -8,24 +10,44 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/tallarines')
-def mostrar_precio_tallarines():
-    # Codigo de prueba, los parametros deberan ser extraido por json, momentaneamente
-    # se ingresaran de manera manual. Eventualmente aca ira la logica de negocio que
-    # devolvera el valor mas bajo resultante de la consulta
-    supermercados = ["Lider"]
-    producto = ["Fideo Spaghetti N° 5 400 Gr"]
-    urls = ["https://www.lider.cl/supermercado/product/sku/576170/Lider-Spaghetti-5"]
-    selectores = ['pdp-mobile-sales-price']
-    imagen_producto = ['https://dipy.cl/cdn/shop/products/cl_z108025_500x.jpg?v=1661811374']
-    
-    resultados = scrap_product_info(supermercados, producto, urls, selectores, imagen_producto)
-    
-    if resultados:  # Comprueba si la lista de resultados no esta vacia
-        return render_template('precio_tallarines.html', resultados=resultados)
-    else:
-        # Manejar el caso en que no se obtuvieron resultados
-        return "No se encontraron resultados"
+# Definimos un apartado en que muestra los datos de scrapping en formato json.
+# Esto es con solo fines practicos, se puede quitar luego.
+@app.route('/data')
+def data_dicts():
+    data_json = json.dumps(data, indent=4) 
+    return render_template('data.html', data_json=data_json)
+
+
+@app.route('/aceite')
+def mostrar_precio_aceite():
+    categoria = "Aceite"  # Reemplaza con la categoría que corresponda
+    supermercados = data[categoria]  # Obtiene los datos de los supermercados para la categoría extrayendolos del modulo "data.scrapping.py"
+
+    resultados = []
+
+    for supermercado, datos_supermercado in supermercados.items():
+        producto = categoria
+        url = datos_supermercado['Link']
+        selector = datos_supermercado['Selector']
+        imagen_producto = datos_supermercado['Imagenes']
+
+        resultado = scrap_product_info([supermercado], [producto], [url], [selector], [imagen_producto])
+
+        if resultado:
+            resultados.extend(resultado)
+
+    if resultados:
+        # Ordena la lista de resultados por el precio (de menor a mayor)
+        resultados = sorted(resultados, key=lambda x: x['Precio'])
+
+        if resultados:
+            # Ahora, resultados[0] contiene el precio mas bajo y lo recuperamos
+            # en una variable extra para aislarlo en el hmtl
+            resultado_mas_bajo = resultados[0]
+
+            return render_template('precio_aceite.html', resultados=resultados, resultado_mas_bajo=resultado_mas_bajo)
+    return "No se encontraron resultados"
+
 
 
 if __name__ == "__main__":

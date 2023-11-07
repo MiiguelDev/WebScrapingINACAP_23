@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Precios más Bajos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados de búsqueda</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Supermercado</th>
+                    <th>Precio Mas Bajo</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><h1>{{ resultados[0]['Producto'] }}</h1></td>
+                    <td><h1>{{ resultados[0]['Supermercado'] }}</h1></td>
+                    <td><h1 style="margin-bottom: 20px">${{ resultados[0]['Precio'] }}</h1></td>
+                    <td>
+                        <a href="{{ resultados[0]['URL'] }}" rel="noreferrer" target="_blank">
+                            {{ resultados[0]['URL'][:28] }}
+                        </a>
+                    </td>
+                </tr>
+                {% for resultado in resultados[1:] %}
+                <tr>
+                    <td>{{ resultado['Producto'] }}</td>
+                    <td>{{ resultado['Supermercado'] }}</td>
+                    <td>${{ resultado['Precio'] }}</td>
+                    <td>
+                        <a href="{{ resultado['URL'] }}" rel="noreferrer" target="_blank">
+                            {{ resultado['URL'][:28] }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+

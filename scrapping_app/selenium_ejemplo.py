@@ -20,6 +20,7 @@ def scrap_product_info(supermercados, producto, urls, selectores, imagenes):
     driver = selenium.webdriver.Chrome()  # Si tienes chromedriver.exe en otra ubicación, especifícala.
 
     for i in range(len(supermercados)):
+        producto = producto[i]
         supermercado = supermercados[i]
         url = urls[i]
         selector = selectores[i]
@@ -44,6 +45,7 @@ def scrap_product_info(supermercados, producto, urls, selectores, imagenes):
 
                 resultado = {
                     "ID": resultado_id,
+                    "Producto": producto,
                     "Supermercado": supermercado,
                     "Precio": precio_limpio,
                     "URL": url,
