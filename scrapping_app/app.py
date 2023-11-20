@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from selenium_ejemplo import scrap_product_info
-from data_scrapping import data;
+from scrap_manual.data import data;
 import json
 
 app = Flask(__name__)
