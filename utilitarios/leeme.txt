@@ -1,0 +1,6 @@
+Esta carpeta contiene varios archivos para manipular la base de datos. 
+
+test_con: Realiza varias operaciones para asegurarse que la base de datos esta activa y contiene valores validos 
+insert_data: Realiza la insercion de 30 valores en los supermercados y productos que trabajamos actualmente, este es necesario
+para poder insertar datos posteriormente.
+clean_tables: Limpiara la bd solo dejando las tablas y su estructura, usar solo de ser necesario.
