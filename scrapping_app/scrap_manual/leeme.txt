@@ -1,0 +1,15 @@
+Uso de la app
+
+scrap_manual.py es una app que "facilita" la insercion de datos en nuestra BD.
+
+Al usar el boton de Inicio abrira una ventana para insertar el valor y ademas una ventana en el navegador 
+por defecto para insertar el precio de manera manual.
+Al darle aceptar salta al siguiente valor y abre una nueva ventana.
+Los valores se pueden visualizar en una ventana principal con nombre del producto, supermercado, url y valor ingresado.
+Al terminar de iterar los valores lanza un mensaje de confirmacion y al darle Aceptar inyecta los valores en la BD.
+Para terminar simplemente cierra la ventana de la app
+
+(Posibles mejoras)
+Agregar un boton que cancele todo y te devuelva a la ventana principal cuando estes ingresando valores.
+Alguna forma en que luego de abrir una ventana esta se cierre y no tener que hacerlo de manera manual.
+Poder editar los valores ingresados antes de aceptar la inyeccion de datos desde las tabla principal.

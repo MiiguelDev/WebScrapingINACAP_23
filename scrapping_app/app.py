@@ -44,6 +44,32 @@ def index():
                            product5_data=results.get('product5_data', []))
                         # Luego de agregar otro producto, se debe agregar una nueva variable 
                         # para pasar los datos de ese producto (ej: product6_data, product7_data, etc.)
+                        
+
+@app.route('/aceite')
+def aceite():
+    cur = mysql.connection.cursor()
+    cur.execute("""
+    SELECT s.super_nombre, p.producto_nombre, hp.precio, hp.fecha_hora
+    FROM historial_precios hp
+    INNER JOIN (
+        SELECT super_id, MAX(fecha_hora) AS fecha_maxima
+        FROM historial_precios
+        JOIN producto ON producto.producto_id = historial_precios.producto_id
+        WHERE producto.producto_nombre = 'Aceite'
+        GROUP BY super_id
+    ) AS ultimos_precios ON hp.super_id = ultimos_precios.super_id AND hp.fecha_hora = ultimos_precios.fecha_maxima
+    JOIN supermercado s ON hp.super_id = s.super_id
+    JOIN producto p ON hp.producto_id = p.producto_id
+    WHERE p.producto_nombre = 'Aceite'
+    ORDER BY hp.precio ASC
+    """)
+    aceite_data = cur.fetchall()
+    cur.close()
+
+    return render_template('precio_aceite.html', aceite_data=aceite_data)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

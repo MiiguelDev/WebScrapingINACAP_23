@@ -88,23 +88,5 @@ DATA = {
             'Link': 'https://cugat.cl/producto/agua-cachantun-con-gas-1-6-lt/',
             'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/671603-750-750?width=750&height=750&aspect=true'
         }
-    },
-    'Arroz': {
-        'Lider': {
-            'Link': 'https://www.lider.cl/supermercado/product/sku/2411/tucapel-arroz-grado-2-bolsa-1-kg',
-            'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459078-178-178?width=178&height=178&aspect=true'
-        },
-        'Jumbo': {
-            'Link': 'https://www.jumbo.cl/arroz-grado-2-tucapel-1-kg-blue-bonnet-grano-largo-y-delgado/p',
-            'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459078-178-178?width=178&height=178&aspect=true'
-        },
-        'Santa Isabel': {
-            'Link': 'https://www.santaisabel.cl/arroz-grado-2-tucapel-1-kg-blue-bonnet-grano-largo-y-delgado/p',
-            'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459078-178-178?width=178&height=178&aspect=true'
-        },
-        'Cugat': {
-            'Link': 'https://cugat.cl/producto/arroz-grado-2-tucapel-1-kg/',
-            'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459078-178-178?width=178&height=178&aspect=true'
-        }
     }
 }
