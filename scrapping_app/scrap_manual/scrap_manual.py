@@ -1,29 +1,26 @@
 import tkinter as tk
+import os
+import sys
 from tkinter import simpledialog, messagebox, ttk, PhotoImage
 import mysql.connector
 from datetime import datetime
 from data import DATA
 import webbrowser
+from dicts import supermercado_ids, producto_ids
+from PIL import Image, ImageTk
 
-# Diccionarios con los IDs
-producto_ids = {
-    'Aceite': 1,
-    'Azucar': 2,
-    'Atun': 3,
-    'Lavalozas': 4,
-    'Agua': 5,
-}
-
-supermercado_ids = {
-    'Lider': 1,
-    'Jumbo': 2,
-    'Santa Isabel': 3,
-    'Cugat': 4,
-}
 
 # Lista para almacenar datos temporalmente
 datos_a_insertar = []
 
+def reiniciar_app():
+    """ Pregunta al usuario antes de reiniciar el script de Python. """
+    respuesta = messagebox.askyesno("Reiniciar Aplicación", "Se actualizará la app, cualquier dato no guardado se perderá. ¿Desea actualizar?")
+    if respuesta:
+        python = sys.executable
+        os.execl(python, python, *sys.argv)
+        
+        
 def obtener_id_supermercado(nombre_supermercado):
     return supermercado_ids.get(nombre_supermercado, None)
 
@@ -64,7 +61,7 @@ datos_a_insertar = []
 def insertar_datos():
     # Esta función insertará los datos almacenados en 'datos_a_insertar' en la base de datos
     if not datos_a_insertar:
-        messagebox.showinfo("Información", "No hay datos para insertar.")
+        messagebox.showinfo("Informacion", "No hay datos para insertar.")
         return
     
     try:
@@ -107,7 +104,8 @@ class CustomDialog(tk.Toplevel):
         self.precio = None
         self.create_widgets()
         self.set_window_position()
-        self.configure(background='#4F7BA7')  # Cambiar el color de fondo
+        self.iconbitmap('scrapping_app/scrap_manual/images/bird-1.ico')
+        self.configure(background='white')  # Cambiar el color de fondo
         self.grab_set()  # Hace que la ventana sea modal
         self.protocol("WM_DELETE_WINDOW", self.on_close)  # Manejar el evento de cierre de ventana
         
@@ -116,39 +114,36 @@ class CustomDialog(tk.Toplevel):
         self.on_cancel()
         
     def set_window_position(self):
-        window_width = 700  # Ancho fijo de la ventana
-        window_height = 175  # Alto fijo de la ventana
-
-        # Obtener las dimensiones de la pantalla
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-        # Calcular la posición x e y
-        x = 50  # A la izquierda de la pantalla
-        y = (screen_height - window_height) // 2  # En el centro de la pantalla verticalmente
-
-        # Configurar tamaño y posición
-        self.geometry(f'{window_width}x{window_height}+{x}+{y}')
+        window_width = 400
+        window_height = 150
+        # Puedes ajustar estas coordenadas para cambiar la posición de la ventana
+        position_right = 50
+        position_down = 50
+        self.geometry(f'{window_width}x{window_height}+{position_right}+{position_down}')
 
     def create_widgets(self):
-        tk.Label(self, text=self.message).pack(pady=10)
+        tk.Label(self, text=self.message).pack(pady=(20, 10))
         self.entry = tk.Entry(self)
-        self.entry.pack(pady=5)
-        tk.Button(self, text="Aceptar", command=self.on_accept).pack(side="left", padx=(20, 10), pady=10)
-        tk.Button(self, text="Cancelar", command=self.on_cancel).pack(side="right", padx=(10, 20), pady=10)
+        self.entry.pack(pady=5, padx=20, fill='x', expand=True)
+        # Botón Aceptar
+        button_accept = tk.Button(self, text="Aceptar", command=self.on_accept)
+        button_accept.pack(side="left", padx=(20, 10), pady=(0, 20), fill='x', expand=True)
+        # Botón Cancelar
+        button_cancel = tk.Button(self, text="Cancelar", command=self.on_cancel)
+        button_cancel.pack(side="right", padx=(10, 20), pady=(0, 20), fill='x', expand=True)
 
     def on_accept(self):
         try:
             self.precio = int(self.entry.get())
             self.destroy()
         except ValueError:
-            messagebox.showwarning("Advertencia", "Por favor, ingrese un número válido.")
+            messagebox.showwarning("Advertencia", "Ingrese valores validos, no sea pelmazo.")
 
     def on_cancel(self):
-        if messagebox.askyesno("Confirmación", "Desea cancelar el scraping?"):
+        if messagebox.askyesno("Confirmacion", "Desea cancelar el scraping?"):
             self.parent.cancel_scraping = True
             self.destroy()
-
+            
 def extraer_precios():
     app.cancel_scraping = False
     ultimos_precios = obtener_todos_los_ultimos_precios()
@@ -237,7 +232,7 @@ def on_edit_precio(event):
 
 
 def limpiar_precios_actualizados():
-    respuesta = messagebox.askyesno("Borrar Precios Actualizados", "¿Está seguro de que quiere borrar todos los precios actualizados?")
+    respuesta = messagebox.askyesno("Borrar Precios Actualizados", "Seguro que desea borrar los precios actualizados? \nEsta accion no tiene vuelta atras.")
     if respuesta:
         # Limpia la visualización de precios en la tabla
         for child in tabla.get_children():
@@ -246,50 +241,102 @@ def limpiar_precios_actualizados():
         # Limpia los datos en la lista para prevenir la inserción
         datos_a_insertar.clear()
 
-
+def ajustar_tamaño_columnas(event=None):
+    ancho_tabla = tabla.winfo_width()  # Obtener el ancho actual de la tabla
+    num_columnas = len(tabla["columns"])
+    ancho_columna = ancho_tabla // num_columnas
+    for columna in tabla["columns"]:
+        tabla.column(columna, width=ancho_columna)
+        
+def cargar_y_redimensionar_imagen(ruta_imagen, nuevo_ancho, nuevo_alto):
+    imagen = Image.open(ruta_imagen)
+    imagen = imagen.resize((nuevo_ancho, nuevo_alto), Image.Resampling.LANCZOS)
+    return ImageTk.PhotoImage(imagen)
+        
 def mostrar_menu_principal():
     global tabla
     for widget in app.winfo_children():
         widget.destroy()
 
+    # Configuración del Frame de botones a la izquierda
+    botones_frame = tk.Frame(app, bg='white')
+    botones_frame.grid(row=0, column=0, sticky='ns')
+    
+    # Carga y redimensiona la imagen
+    imagen_redimensionada = cargar_y_redimensionar_imagen('scrapping_app/scrap_manual/images/bird-1.png', 100, 100)
+
+    # Crea un Label para la imagen y lo coloca en el Frame
+    label_imagen = tk.Label(botones_frame, image=imagen_redimensionada, bg='white')
+    label_imagen.image = imagen_redimensionada  # Referencia para evitar la recolección de basura
+    label_imagen.grid(row=0, column=0, padx=10, pady=10)  # Imagen en la fila 0
+
+    # Botones con tamaño personalizado
+    boton_scraping = tk.Button(botones_frame, text="Comenzar Scraping", command=extraer_precios, background='green', highlightbackground='green', width=20, height=2)
+    boton_scraping.grid(row=1, column=0, padx=10, pady=10)  # Botón "Comenzar Scraping" en la fila 1
+
+    boton_insertar = tk.Button(botones_frame, text="Confirmar Ingreso Precios \n Actualizados", command=insertar_datos, background='lightblue', highlightbackground='lightblue', width=20, height=2)
+    boton_insertar.grid(row=2, column=0, padx=10, pady=10)  # Botón "Insertar Nuevos Datos" en la fila 2
+
+    boton_borrar = tk.Button(botones_frame, text="Borrar todo los Datos \n Actualizados.", command=limpiar_precios_actualizados, background='red', highlightbackground='red', width=20, height=2)
+    boton_borrar.grid(row=3, column=0, padx=10, pady=10)  # Botón "Borrar todo los Datos" en la fila 3
+    
+    # Botón para reiniciar la aplicación
+    boton_reiniciar = tk.Button(botones_frame, text="Refrescar Datos", command=reiniciar_app, background='yellow', highlightbackground='lightblue', width=20, height=2)
+    boton_reiniciar.grid(row=4, column=0, padx=10, pady=10)  # Botón "Refrescar Datos" en la fila 4
+    
+    leyenda_frame = tk.Frame(app, bg='white')
+    leyenda_frame.grid(row=5, column=0, sticky='ew')  # Frame de la leyenda en la fila 5
+
+
+    # Configuración de la tabla
     tabla = ttk.Treeview(app, columns=("Supermercado", "Producto", "Último Precio", "Precio Actualizado"), show='headings', height=28)
     tabla.heading("Supermercado", text="Supermercado")
     tabla.heading("Producto", text="Producto")
     tabla.heading("Último Precio", text="Último Precio")
     tabla.heading("Precio Actualizado", text="Precio Actualizado")
+    tabla.grid(row=0, column=1, sticky='nsew')
 
+    # Configuración de la barra de desplazamiento
+    scrollbar = ttk.Scrollbar(app, orient="vertical", command=tabla.yview)
+    scrollbar.grid(row=0, column=2, sticky='ns')
+    tabla.configure(yscrollcommand=scrollbar.set)
+
+    # Configuración del layout
+    app.grid_rowconfigure(0, weight=1)
+    app.grid_columnconfigure(1, weight=1)
+    
+        # Ajustar el tamaño de las columnas al inicio y cuando la ventana se redimensiona
+    app.after(100, ajustar_tamaño_columnas)  # Ajustar tamaño después de que la ventana esté visible
+    app.bind("<Configure>", ajustar_tamaño_columnas)
+
+    # Cargar los datos iniciales en la tabla
+    cargar_datos_iniciales()
+
+    tabla.bind("<Button-3>", mostrar_menu_contextual)
+
+    # Cargar los datos iniciales en la tabla
+    cargar_datos_iniciales()
+
+def cargar_datos_iniciales():
     ultimos_precios = obtener_todos_los_ultimos_precios()
     for producto, supermercados in DATA.items():
         for supermercado in supermercados:
             producto_id = obtener_id_producto(producto)
             supermercado_id = obtener_id_supermercado(supermercado)
             ultimo_precio = ultimos_precios.get((producto_id, supermercado_id), 'N/A')
-            tabla.insert('', 'end', values=(supermercado, producto, ultimo_precio, ""))  # Inicialmente no hay precio actualizado
 
-    scrollbar = ttk.Scrollbar(app, orient="vertical", command=tabla.yview)
-    scrollbar.pack(side='right', fill='y')
-    tabla.configure(yscrollcommand=scrollbar.set)
-    tabla.pack(expand=True, fill='both')
+            # Convertir el precio a entero si no es 'N/A'
+            if ultimo_precio != 'N/A':
+                ultimo_precio = int(ultimo_precio)
 
-    botones_frame = tk.Frame(app, bg='#4F7BA7')
-    botones_frame.pack(fill='x')
+            tabla.insert('', 'end', values=(supermercado, producto, ultimo_precio, ""))
 
-    boton_scraping = tk.Button(botones_frame, text="Comenzar scraping", command=extraer_precios, background='green', highlightbackground='green')
-    boton_scraping.pack(side=tk.LEFT, padx=(20, 10), pady=10)
-
-    boton_insertar = tk.Button(botones_frame, text="Insertar Datos", command=insertar_datos, background='lightblue', highlightbackground='lightblue')
-    boton_insertar.pack(side=tk.LEFT, padx=(10, 20), pady=10)
-
-    boton_borrar = tk.Button(botones_frame, text="Borrar todo los precios act.", command=limpiar_precios_actualizados, background='red', highlightbackground='red')
-    boton_borrar.pack(side=tk.LEFT, padx=(10, 20), pady=10)
-    
-    tabla.bind("<Button-3>", mostrar_menu_contextual)
-
-
+# En tu función principal o en la configuración inicial de la ventana
 app = tk.Tk()
-app.title("MartinMercado /// Actualización de Precios")
-app.geometry("800x700")
-app.configure(bg='#4F7BA7')
+app.title("MartinMercado@ Software de Actualización de Precios V2.0")
+# Establece la posición de la ventana en el tope de la pantalla (puedes ajustar la posición en x según lo necesites)
+app.geometry("720x770+0+0")
+app.configure(bg='white')
 icon = PhotoImage(file='scrapping_app/static/assets/favicon-32x32.png')
 app.iconphoto(False, icon)
 mostrar_menu_principal()
