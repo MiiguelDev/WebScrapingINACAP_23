@@ -38,15 +38,20 @@ def fetch_all_data(host, database, user, password, table_name):
                 FROM historial_precios
                 JOIN supermercado ON historial_precios.super_id = supermercado.super_id
                 JOIN producto ON historial_precios.producto_id = producto.producto_id
+                ORDER BY historial_precios.fecha_hora DESC
                 """
             else:
-                query = f"SELECT * FROM {table_name}"
+                query = f"SELECT * FROM {table_name} ORDER BY fecha_hora DESC"
             
             cursor.execute(query)
             records = cursor.fetchall()
             if records:
                 for record in records:
-                    print(record)
+                    producto_id, producto_nombre, super_nombre, precio, fecha_hora = record
+                    precio_formateado = f"${int(precio)}"  # Eliminar decimales y agregar símbolo de dólar
+                    fecha_formateada = fecha_hora.strftime("%d-%m-%Y // %H:%M:%S")  # Formato de fecha y hora
+                    # Imprimir con espacios para mejor legibilidad
+                    print(f"{producto_id}  {producto_nombre.ljust(20)}  {super_nombre.ljust(20)}  {precio_formateado.ljust(10)}  {fecha_formateada}")
             else:
                 print(f"No se encontraron datos en la tabla '{table_name}'.")
         except Error as e:
@@ -54,8 +59,9 @@ def fetch_all_data(host, database, user, password, table_name):
         finally:
             cursor.close()
             connection.close()
-
+            
 fetch_all_data('3.22.156.122', 'comparacion_precios', 'scrapy', 'Inacap2023#', 'historial_precios')
+
 
 def describe_all_tables_structure(host, database, user, password):
     connection = create_db_connection(host, database, user, password)
