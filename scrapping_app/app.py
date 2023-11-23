@@ -1,5 +1,9 @@
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
+from scrap_manual.data import DATA
+from descripcion import descripciones
+
+
 
 app = Flask(__name__)
 
@@ -13,14 +17,13 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
-    producto_ids = [1,2,3,4,5]  # Lista de IDs de productos, 
-                                # para agregar otro producto solo se debe agregar su ID a esta lista
-    results = {}  # Diccionario para almacenar los datos de cada producto
+    producto_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    products = []
 
-    for i, producto_id in enumerate(producto_ids, start=1):
+    for producto_id in producto_ids:
         cur = mysql.connection.cursor()
         cur.execute("""
-        SELECT s.super_nombre, p.producto_nombre, hp.precio
+        SELECT s.super_nombre, p.producto_nombre, ROUND(hp.precio) AS precio
         FROM historial_precios hp
         INNER JOIN (
             SELECT super_id, producto_id, MAX(fecha_hora) AS fecha_maxima
@@ -32,18 +35,28 @@ def index():
         JOIN producto p ON hp.producto_id = p.producto_id
         ORDER BY hp.precio ASC LIMIT 1
         """, (producto_id,))
-        results[f'product{i}_data'] = cur.fetchall()
+        data = cur.fetchone()  # fetchone devuelve una sola fila o None si no hay datos
         cur.close()
 
-    # Desempaquetar el diccionario 'results' para pasar cada conjunto de datos de productos individualmente
-    return render_template('index.html', 
-                           product1_data=results.get('product1_data', []), 
-                           product2_data=results.get('product2_data', []), 
-                           product3_data=results.get('product3_data', []), 
-                           product4_data=results.get('product4_data', []), 
-                           product5_data=results.get('product5_data', []))
-                        # Luego de agregar otro producto, se debe agregar una nueva variable 
-                        # para pasar los datos de ese producto (ej: product6_data, product7_data, etc.)
+        if data:
+            supermercado, producto_nombre, precio = data
+            imagen_url = DATA[producto_nombre][supermercado]['Imagenes']
+            producto_link = DATA[producto_nombre][supermercado]['Link']
+            descripcion = descripciones.get(producto_nombre, 'Descripción no disponible.')
+
+            products.append({
+                'supermercado': supermercado,
+                'nombre': producto_nombre,
+                'precio': precio,
+                'imagen': imagen_url,
+                'link': producto_link,
+                'descripcion': descripcion,
+            })
+        else:
+            products.append({})
+
+    return render_template('index.html', products=products)
+
                         
 
 @app.route('/aceite')

@@ -92,310 +92,42 @@
         </div>
       </div>
     </header>
-    <!-- Section-->
-    <section class="py-5">
-      <div class="container px-4 px-lg-5 mt-5">
-        <div
-          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-        >
+<!-- Section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+          {% for product_data in products %}
           <div class="col mb-5">
-            <!--1111111111111111111111111111111111111111111111111111111-->
-            <div class="card h-100">
-              <img
-                class="card-img-top"
-                src="https://jumbo.vtexassets.com/arquivos/ids/485076-750-750?width=750&height=750&aspect=true"
-                alt="..."
-              />
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product nameemwfjñweokfñewkf{wekf{ekwl{fkwe{pfkwefkew´pkfwefpkepwfk}}}}-->
-                  <h5 class="fw-bolder">{{product1_data[0][1]}}</h5>
-                  <!-- Product price-->
-                  $ {{product1_data[0][2]}}
-                </div>
-              </div>
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Ver otros supermercados</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <!--2222222222222222222222222222222222222222222222222222222-->
-            <div class="card h-100">
-              <!-- Sale badge
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>-->
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://jumbo.vtexassets.com/arquivos/ids/470718-750-750?width=750&height=750&aspect=true"
-                alt="..."
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">{{product2_data[0][1]}}</h5>
-                  <!-- Product reviews
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+              <div class="card h-100">
+                  <!-- Product image -->
+                  <img class="card-img-top" src="{{ product_data.imagen }}" alt="Imagen del Producto">
+                  
+                  <!-- Product details -->
+                  <div class="card-body p-4">
+                      <div class="text-center">
+                          <!-- Product name -->
+                          <h5 class="fw-bolder">{{ product_data.nombre }}</h5>
+                          <!-- Product description -->
+                          <p>{{ product_data.descripcion }}</p>
+                          <!-- Supermarket name -->
+                          <p><strong>Precio más económico:</strong></p>
+                          <p><strong>{{ product_data.supermercado }}</strong></p>
+                          <!-- Product price -->
+                          <p>$ {{ product_data.precio }}</p>
+                      </div>
                   </div>
-                  Product price
-                  <span class="text-muted text-decoration-line-through"
-                    >$20.00</span
-                  >-->
-                  $ {{product2_data[0][2]}}
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Ver otros supermercados</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <!--333333333333333333333333333333333333333333333333333333-->
-            <div class="card h-100">
-              <!-- Sale badge
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>-->
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://jumbo.vtexassets.com/arquivos/ids/410215-750-750?width=750&height=750&aspect=true"
-                alt="..."
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">{{product3_data[0][1]}}</h5>
-                  <!-- Product price
-                  <span class="text-muted text-decoration-line-through"
-                    >$50.00</span
-                  >-->
-                  $ {{product3_data[0][2]}}
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Ver otros supermercados</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <!--4444444444444444444444444444444444444444444444444-->
-            <div class="card h-100">
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://jumbo.vtexassets.com/arquivos/ids/512894-750-750?width=750&height=750&aspect=true"
-                alt="..."
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">{{product4_data[0][1]}}</h5>
-                  <!-- Product reviews
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+                  <!-- Product actions -->
+                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="text-center">
+                          <a class="btn btn-outline-dark mt-auto" target="_blank" href="{{ product_data.link }}">Ir al Supermercado</a>
+                      </div>
                   </div>
-                  Product price-->
-                  $ {{product4_data[0][2]}}
-                </div>
               </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Ver otros supermercados</a
-                  >
-                </div>
-              </div>
-            </div>
           </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!--<div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>-->
-
-              <!--<img
-                class="card-img-top"
-                src="https://jumbo.vtexassets.com/arquivos/ids/459078-178-178?width=178&height=178&aspect=true"
-                alt="..."
-              />
-
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">{{product5_data[0][1]}}</h5>
-
-                  <!--<span class="text-muted text-decoration-line-through"
-                    >$50.00</span
-                  >-->
-                  <!-- $ {{product5_data[0][2]}}
-                </div>
-              </div>
-
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Ver más detalles</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--<div class="col mb-5">
-            <div class="card h-100">
-
-              <img
-                class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                alt="..."
-              />
-         
-              <div class="card-body p-4">
-                <div class="text-center">
-                
-                  <h5 class="fw-bolder">Fancy Product</h5>
-               
-                  $120.00 - $280.00
-                </div>
-              </div>
-           
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >View options</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-    
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>
-         
-              <img
-                class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                alt="..."
-              />
-       
-              <div class="card-body p-4">
-                <div class="text-center">
-           
-                  <h5 class="fw-bolder">Special Item</h5>
-             
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                  </div>
-             
-                  <span class="text-muted text-decoration-line-through"
-                    >$20.00</span
-                  >
-                  $18.00
-                </div>
-              </div>
-          
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Add to cart</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-        
-              <img
-                class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                alt="..."
-              />
-            
-              <div class="card-body p-4">
-                <div class="text-center">
-              
-                  <h5 class="fw-bolder">Popular Item</h5>
-        
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                  </div>
-           
-                  $40.00
-                </div>
-              </div>
-        
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Add to cart</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>-->
-        </div>
+          {% endfor %}
       </div>
-    </section>
+  </div>
+</section>
     <!-- Footer-->
     <footer class="py-5" style="background-color: #de410a">
       <div class="container">
