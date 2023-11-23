@@ -15,7 +15,7 @@ datos_a_insertar = []
 
 def reiniciar_app():
     """ Pregunta al usuario antes de reiniciar el script de Python. """
-    respuesta = messagebox.askyesno("Reiniciar Aplicación", "Se actualizará la app, cualquier dato no guardado se perderá. ¿Desea actualizar?")
+    respuesta = messagebox.askyesno("Reiniciar Aplicacion", "Se actualizara la app, cualquier dato no guardado se perdera. ¿Desea actualizar? NO LLORES LUEGO")
     if respuesta:
         python = sys.executable
         os.execl(python, python, *sys.argv)
@@ -271,17 +271,17 @@ def mostrar_menu_principal():
     label_imagen.grid(row=0, column=0, padx=10, pady=10)  # Imagen en la fila 0
 
     # Botones con tamaño personalizado
-    boton_scraping = tk.Button(botones_frame, text="Comenzar Scraping", command=extraer_precios, background='green', highlightbackground='green', width=20, height=2)
+    boton_scraping = tk.Button(botones_frame, text="Comenzar Scraping", command=extraer_precios, background='#39BE2C', highlightbackground='green', width=20, height=2)
     boton_scraping.grid(row=1, column=0, padx=10, pady=10)  # Botón "Comenzar Scraping" en la fila 1
 
-    boton_insertar = tk.Button(botones_frame, text="Confirmar Ingreso Precios \n Actualizados", command=insertar_datos, background='lightblue', highlightbackground='lightblue', width=20, height=2)
+    boton_insertar = tk.Button(botones_frame, text="Confirmar Ingreso Precios \n Actualizados", command=insertar_datos, background='#59CDC2', highlightbackground='lightblue', width=20, height=2)
     boton_insertar.grid(row=2, column=0, padx=10, pady=10)  # Botón "Insertar Nuevos Datos" en la fila 2
 
-    boton_borrar = tk.Button(botones_frame, text="Borrar todo los Datos \n Actualizados.", command=limpiar_precios_actualizados, background='red', highlightbackground='red', width=20, height=2)
+    boton_borrar = tk.Button(botones_frame, text="Borrar todo los Datos \n Actualizados.", command=limpiar_precios_actualizados, background='#E74A5F', highlightbackground='red', width=20, height=2)
     boton_borrar.grid(row=3, column=0, padx=10, pady=10)  # Botón "Borrar todo los Datos" en la fila 3
     
     # Botón para reiniciar la aplicación
-    boton_reiniciar = tk.Button(botones_frame, text="Refrescar Datos", command=reiniciar_app, background='yellow', highlightbackground='lightblue', width=20, height=2)
+    boton_reiniciar = tk.Button(botones_frame, text="Refrescar Datos", command=reiniciar_app, background='#E26ADB', highlightbackground='lightblue', width=20, height=2)
     boton_reiniciar.grid(row=4, column=0, padx=10, pady=10)  # Botón "Refrescar Datos" en la fila 4
     
     leyenda_frame = tk.Frame(app, bg='white')
