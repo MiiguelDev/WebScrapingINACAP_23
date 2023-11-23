@@ -103,17 +103,16 @@
                   <img class="card-img-top" src="{{ product_data.imagen }}" alt="Imagen del Producto">
                   
                   <!-- Product details -->
-                  <div class="card-body p-4">
+                  <div class="card-body p-3">
                       <div class="text-center">
                           <!-- Product name -->
-                          <h5 class="fw-bolder">{{ product_data.nombre }}</h5>
                           <!-- Product description -->
-                          <p>{{ product_data.descripcion }}</p>
+                          <p class="fs-5">{{ product_data.descripcion }}</p>
                           <!-- Supermarket name -->
-                          <p><strong>Precio más económico:</strong></p>
-                          <p><strong>{{ product_data.supermercado }}</strong></p>
+                          <p class="fs-6">Precio más económico:</p>
+                          <p class="fs-5"><strong>{{ product_data.supermercado }}</strong></p>
                           <!-- Product price -->
-                          <p>$ {{ product_data.precio }}</p>
+                          <p class="fs-5">$ {{ product_data.precio }}</p>
                       </div>
                   </div>
                   <!-- Product actions -->
