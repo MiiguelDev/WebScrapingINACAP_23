@@ -26,27 +26,31 @@ cursor.executemany(insert_supermercado_query, supermercados)
 conexion.commit()
 
 # Insertar registros de productos con números correlativos
+# Asegúrate de que los IDs de los nuevos productos continúen la secuencia de los ya existentes.
 productos = [
     (1, 'Aceite'),
     (2, 'Azucar'),
     (3, 'Atun'),
     (4, 'Lavalozas'),
-    (5, 'Agua')
+    (5, 'Agua'),
+    (6, 'Te'),
+    (7, 'Mantequilla'),
+    (8, 'Leche'),
+    (9, 'Lenteja'),
+    (10, 'Salchichas')
 ]
 
 insert_producto_query = "INSERT INTO producto (producto_id, producto_nombre) VALUES (%s, %s)"
 cursor.executemany(insert_producto_query, productos)
 conexion.commit()
 
-# Insertar 30 filas adicionales en la tabla historial_precios
+# Insertar registros en la tabla historial_precios para los nuevos productos
+# Asegúrate de actualizar el número total de productos y supermercados si estos cambian.
 insert_historial_precios_query = """
-INSERT INTO historial_precios (historial_id, super_id, producto_id, precio, fecha_hora)
-SELECT (i % 30) + 1, (i % 4) + 1, (i % 5) + 1, 1000 + (i - 1) * 10, DATE_ADD('2023-11-01 08:00:00', INTERVAL (i - 1) HOUR)
-FROM (
-  SELECT (t4.a + t5.a * 4 + 1) AS i
-  FROM (SELECT 0 AS a UNION SELECT 1 UNION SELECT 2 UNION SELECT 3) AS t4
-  CROSS JOIN (SELECT 0 AS a UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4) AS t5
-) AS numbers
+INSERT INTO historial_precios (super_id, producto_id, precio, fecha_hora)
+SELECT s.super_id, p.producto_id, 1000 + (s.super_id * 10) + p.producto_id, NOW()
+FROM (SELECT super_id FROM supermercado) s
+CROSS JOIN (SELECT producto_id FROM producto) p
 """
 
 cursor.execute(insert_historial_precios_query)
@@ -55,3 +59,4 @@ conexion.commit()
 # Cerrar la conexión y el cursor
 cursor.close()
 conexion.close()
+

@@ -88,5 +88,95 @@ DATA = {
             'Link': 'https://cugat.cl/producto/agua-cachantun-con-gas-1-6-lt/',
             'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/671603-750-750?width=750&height=750&aspect=true'
         }
+    },
+    'Te': {
+    'Lider': {
+        'Link': 'https://www.lider.cl/supermercado/product/sku/307191/supremo-te-ceylan-premium-caja-100-un',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/434948-450-450?width=450&height=450&aspect=true'
+    },
+    'Jumbo': {
+        'Link': 'https://www.jumbo.cl/te-ceylan-supremo-premium-200-g-100-unid/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/434948-450-450?width=450&height=450&aspect=true'
+    },
+    'Santa Isabel': {
+        'Link': 'https://www.santaisabel.cl/te-ceylan-supremo-premium-200-g-100-unid/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/434948-450-450?width=450&height=450&aspect=true'
+    },
+    'Cugat': {
+        'Link': 'https://cugat.cl/producto/te-ceylan-supremo-100-bolsitas/',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/434948-450-450?width=450&height=450&aspect=true'
     }
+},
+'Mantequilla': {
+    'Lider': {
+        'Link': 'https://www.lider.cl/supermercado/product/sku/2071/colun-mantequilla-con-sal-250-g',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/396797-450-450?width=450&height=450&aspect=true'
+    },
+    'Jumbo': {
+        'Link': 'https://www.jumbo.cl/mantequilla-con-sal-colun-250-g/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/396797-450-450?width=450&height=450&aspect=true'
+    },
+    'Santa Isabel': {
+        'Link': 'https://www.santaisabel.cl/mantequilla-con-sal-colun-250-g/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/396797-450-450?width=450&height=450&aspect=true'
+    },
+    'Cugat': {
+        'Link': 'https://cugat.cl/producto/mantequilla-pan-colun-250g/',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/396797-450-450?width=450&height=450&aspect=true'
+    }
+},
+'Leche': {
+    'Lider': {
+        'Link': 'https://www.lider.cl/supermercado/product/sku/702661/soprole-leche-entera-natural-1-l',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/676764-450-450?width=450&height=450&aspect=true'
+    },
+    'Jumbo': {
+        'Link': 'https://www.jumbo.cl/leche-soprole-natural-1-litro/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/676764-450-450?width=450&height=450&aspect=true'
+    },
+    'Santa Isabel': {
+        'Link': 'https://www.santaisabel.cl/leche-soprole-natural-1-litro/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/676764-450-450?width=450&height=450&aspect=true'
+    },
+    'Cugat': {
+        'Link': 'https://cugat.cl/producto/leche-entera-soprole-1-lt/',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/676764-450-450?width=450&height=450&aspect=true'
+    }
+},
+'Lenteja': {
+    'Lider': {
+        'Link': 'https://www.lider.cl/supermercado/product/sku/314273/banquete-lentejas-4-mm-bolsa-1-kg',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459015-450-450?width=450&height=450&aspect=true'
+    },
+    'Jumbo': {
+        'Link': 'https://www.jumbo.cl/lentejas-banquete-bolsa-1-kg-4mm/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459015-450-450?width=450&height=450&aspect=true'
+    },
+    'Santa Isabel': {
+        'Link': 'https://www.santaisabel.cl/lentejas-banquete-bolsa-1-kg-4mm/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459015-450-450?width=450&height=450&aspect=true'
+    },
+    'Cugat': {
+        'Link': 'https://cugat.cl/producto/lentejas-4mm-banquete-1-kg/',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/459015-450-450?width=450&height=450&aspect=true'
+    }
+},
+'Salchichas': {
+    'Lider': {
+        'Link': 'https://www.lider.cl/supermercado/product/sku/884889/receta-del-abuelo-salchichas-surenas-10-un-500-g',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/398583-450-450?width=450&height=450&aspect=true'
+    },
+    'Jumbo': {
+        'Link': 'https://www.jumbo.cl/salchicha-surena-receta-del-abuelo-500-g/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/398583-450-450?width=450&height=450&aspect=true'
+    },
+    'Santa Isabel': {
+        'Link': 'https://www.santaisabel.cl/salchicha-surena-receta-del-abuelo-500-g/p',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/398583-450-450?width=450&height=450&aspect=true'
+    },
+    'Cugat': {
+        'Link': 'https://cugat.cl/producto/salchichas-surenas-recetas-del-abuelo-500-gr/',
+        'Imagenes': 'https://jumbo.vtexassets.com/arquivos/ids/398583-450-450?width=450&height=450&aspect=true'
+    }
+  }
 }

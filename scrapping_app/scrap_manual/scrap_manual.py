@@ -314,8 +314,7 @@ def mostrar_menu_principal():
 
     tabla.bind("<Button-3>", mostrar_menu_contextual)
 
-    # Cargar los datos iniciales en la tabla
-    cargar_datos_iniciales()
+
 
 def cargar_datos_iniciales():
     ultimos_precios = obtener_todos_los_ultimos_precios()
