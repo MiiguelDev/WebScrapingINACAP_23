@@ -10825,3 +10825,23 @@ textarea.form-control-lg {
   }
 
 }
+
+.custom-btn-light-blue {
+  background-color: #add8e6; /* Celeste claro */
+  color: #000000; /* Color del texto */
+}
+
+.custom-btn-light-blue:hover, .custom-btn-light-blue:active {
+  background-color: #3070D8; /* Azul al pasar el cursor o presionar */
+  color: #ffffff; /* Color del texto al pasar el cursor o presionar */
+}
+
+.custom-btn-light-orange {
+  background-color: #ffdab9; /* Naranja tenue */
+  color: #000000; /* Color del texto */
+}
+
+.custom-btn-light-orange:hover, .custom-btn-light-orange:active {
+  background-color: #F47E31; /* Naranja al pasar el cursor o presionar */
+  color: #ffffff; /* Color del texto al pasar el cursor o presionar */
+}
