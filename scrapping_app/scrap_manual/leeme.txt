@@ -1,15 +1,39 @@
 Uso de la app
 
-scrap_manual.py es una app que "facilita" la insercion de datos en nuestra BD.
+Manual de Usuario: Software de Actualización de Precios V2.0
+Descripción General:
+Este software está diseñado para facilitar la actualización y comparación de precios de productos en diferentes supermercados. Permite extraer precios, editarlos, y almacenarlos en una base de datos para su posterior análisis.
 
-Al usar el boton de Inicio abrira una ventana para insertar el valor y ademas una ventana en el navegador 
-por defecto para insertar el precio de manera manual.
-Al darle aceptar salta al siguiente valor y abre una nueva ventana.
-Los valores se pueden visualizar en una ventana principal con nombre del producto, supermercado, url y valor ingresado.
-Al terminar de iterar los valores lanza un mensaje de confirmacion y al darle Aceptar inyecta los valores en la BD.
-Para terminar simplemente cierra la ventana de la app
+Funciones Principales:
+Comenzar Scraping:
 
-(Posibles mejoras)
-Agregar un boton que cancele todo y te devuelva a la ventana principal cuando estes ingresando valores.
-Alguna forma en que luego de abrir una ventana esta se cierre y no tener que hacerlo de manera manual.
-Poder editar los valores ingresados antes de aceptar la inyeccion de datos desde las tabla principal.
+Descripción: Inicia el proceso de extracción de precios de los productos desde sitios web específicos.
+Cómo usar: Haga clic en el botón "Comenzar Scraping". Se abrirá una nueva ventana para cada producto, donde deberá ingresar manualmente el precio observado.
+Confirmar Ingreso de Precios Actualizados:
+
+Descripción: Inserta los precios actualizados en la base de datos.
+Cómo usar: Después de recopilar los precios actualizados, haga clic en "Confirmar Ingreso Precios Actualizados" para guardar los datos en la base de datos.
+Borrar todos los Datos Actualizados:
+
+Descripción: Elimina todos los precios actualizados que aún no se han guardado en la base de datos.
+Cómo usar: Haga clic en "Borrar todo los Datos Actualizados" para limpiar los precios actualizados de la sesión actual.
+Refrescar Datos:
+
+Descripción: Reinicia la aplicación, actualizando los datos y limpiando cualquier dato no guardado.
+Cómo usar: Haga clic en "Refrescar Datos" para reiniciar la aplicación.
+Editar Precio Actualizado:
+
+Descripción: Permite editar manualmente un precio ya actualizado.
+Cómo usar: Haga clic derecho en la fila del producto cuyo precio desea editar y seleccione "Editar Precio Actualizado". Ingrese el nuevo precio en el cuadro de diálogo que aparece.
+Borrar Precio Actualizado:
+
+Descripción: Elimina un precio actualizado específico de un producto.
+Cómo usar: Haga clic derecho en la fila del producto y seleccione "Borrar Precio Actualizado".
+Operación Básica:
+Al iniciar la aplicación, se muestra una tabla con los productos y precios actuales.
+Puede comenzar el proceso de scraping para actualizar los precios.
+Una vez recopilados los precios, puede editarlos o borrarlos antes de confirmar su inserción en la base de datos.
+Notas Adicionales:
+La aplicación incluye manejo de errores para alertar sobre problemas durante la ejecución.
+Se incluyen mensajes de confirmación y advertencia para evitar la pérdida accidental de datos.
+Este manual proporciona una guía básica para las funciones principales del programa. Para un uso más detallado, se recomienda familiarizarse con la interfaz y las opciones disponibles durante la operación del programa.

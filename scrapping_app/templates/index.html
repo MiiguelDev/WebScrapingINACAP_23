@@ -27,63 +27,44 @@
     />
   </head>
   <body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container px-4 px-lg-5">
-        <img src="static/logo-dos.png" alt="..." />
-        <a class="navbar-brand" href="#!">
-          <img src="static/assets/martinmercado.png" alt="MartinMercado" width="190" />
-      </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#!">Inicio</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#!">Sobre Nosotros</a></li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >Productos</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="#!">Todos los productos</a>
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#!">Productos Populares</a></li>
-                <li><a class="dropdown-item" href="#!">Recien llegados</a></li>
-              </ul>
-            </li>
-          </ul>
-          <!--<form class="d-flex">
-            <button class="btn btn-outline-dark" type="submit">
-              <i class="bi-cart-fill me-1"></i>
-              Cart
-              <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-            </button>
-          </form>-->
-        </div>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+      <!-- Contenedor para las imágenes -->
+      <div class="d-flex align-items-center">
+          <img src="{{ url_for('static', filename='logo-dos.png') }}" alt="...">
+          <a class="navbar-brand" href="/">
+              <img src="{{ url_for('static', filename='assets/martinmercado.png') }}" alt="MartinMercado" width="190" />
+          </a>
       </div>
-    </nav>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Contenedor para la lista -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#!">Sobre Nosotros</a></li>
+          </ul>
+      </div>
+  </div>
+</nav>
+
     <!-- Header-->
-    <header style="background-color: #de410a; padding: 5rem">
-      <div class="container px-4 px-lg-5 my-5">
+    <header style="background-color: #de410a; padding: 1.5rem 0;"> <!-- Reducido el padding superior e inferior a 2rem -->
+      <div class="container px-4 px-lg-5 my-2"> <!-- Reducido el margin superior e inferior del contenedor -->
         <div class="text-center text-white">
           <h1 class="display-4 fw-bolder">Comparar es ahorrar</h1>
           <p class="lead fw-normal text-white-50 mb-0">
@@ -92,10 +73,11 @@
         </div>
       </div>
     </header>
+    
 <!-- Section-->
 <section class="py-5">
-  <div class="container px-4 px-lg-5 mt-5">
-      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+  <div class="container px-4 px-lg-5 mt-5" style="transform: scale(0.9); transform-origin: top center;">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
           {% for product_data in products %}
           <div class="col mb-5">
               <div class="card h-100">
@@ -117,29 +99,31 @@
                   </div>
                   <!-- Product actions -->
                   <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                      <div class="text-center">
-                          <a class="btn btn-outline-dark mt-auto" target="_blank" href="{{ product_data.link }}">Ir al Supermercado</a>
+                    <div class="text-center">
+                        <a class="btn btn-outline-dark mt-auto" target="_blank" href="{{ product_data.link }}">Ir al Supermercado</a>
+                        <!-- Botón para ver todas las ofertas -->
+                        <a class="btn btn-outline-primary mt-2" href="{{ url_for('mostrar_producto', nombre_producto=product_data.nombre_producto) }}">Ver todas las ofertas</a>
                       </div>
                   </div>
+
               </div>
           </div>
           {% endfor %}
       </div>
   </div>
 </section>
-    <!-- Footer-->
-    <footer class="py-5" style="background-color: #de410a">
-      <div class="container">
-        <p class="m-0 text-center text-white">
-          Copyright &copy; MartinMercado 2023
-        </p>
-      </div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-  </body>
+<!-- Footer-->
+<footer class="py-5" style="background-color: #de410a">
+  <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; MartinMercado 2023</p>
+  </div>
+</footer>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
 </html>
 
 

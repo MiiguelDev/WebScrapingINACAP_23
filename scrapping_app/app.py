@@ -45,13 +45,16 @@ def index():
             descripcion = descripciones.get(producto_nombre, 'Descripción no disponible.')
 
             products.append({
-                'supermercado': supermercado,
-                'nombre': producto_nombre,
-                'precio': precio,
-                'imagen': imagen_url,
-                'link': producto_link,
-                'descripcion': descripcion,
-            })
+            'supermercado': supermercado,
+            'nombre': producto_nombre,
+            'precio': precio,
+            'imagen': imagen_url,
+            'link': producto_link,
+            'descripcion': descripcion,
+            'nombre_producto': producto_nombre
+        })
+
+
         else:
             products.append({})
 
@@ -59,28 +62,40 @@ def index():
 
                         
 
-@app.route('/aceite')
-def aceite():
-    cur = mysql.connection.cursor()
-    cur.execute("""
-    SELECT s.super_nombre, p.producto_nombre, hp.precio, hp.fecha_hora
-    FROM historial_precios hp
-    INNER JOIN (
-        SELECT super_id, MAX(fecha_hora) AS fecha_maxima
-        FROM historial_precios
-        JOIN producto ON producto.producto_id = historial_precios.producto_id
-        WHERE producto.producto_nombre = 'Aceite'
-        GROUP BY super_id
-    ) AS ultimos_precios ON hp.super_id = ultimos_precios.super_id AND hp.fecha_hora = ultimos_precios.fecha_maxima
-    JOIN supermercado s ON hp.super_id = s.super_id
-    JOIN producto p ON hp.producto_id = p.producto_id
-    WHERE p.producto_nombre = 'Aceite'
-    ORDER BY hp.precio ASC
-    """)
-    aceite_data = cur.fetchall()
-    cur.close()
+@app.route('/producto/<nombre_producto>')
+def mostrar_producto(nombre_producto):
+    if nombre_producto in DATA:
+        cur = mysql.connection.cursor()
+        cur.execute("""
+        SELECT s.super_nombre, p.producto_nombre, hp.precio, hp.fecha_hora
+        FROM historial_precios hp
+        INNER JOIN (
+            SELECT super_id, MAX(fecha_hora) AS fecha_maxima
+            FROM historial_precios
+            JOIN producto ON producto.producto_id = historial_precios.producto_id
+            WHERE producto.producto_nombre = %s
+            GROUP BY super_id
+        ) AS ultimos_precios ON hp.super_id = ultimos_precios.super_id AND hp.fecha_hora = ultimos_precios.fecha_maxima
+        JOIN supermercado s ON hp.super_id = s.super_id
+        JOIN producto p ON hp.producto_id = p.producto_id
+        WHERE p.producto_nombre = %s
+        ORDER BY hp.precio ASC
+        """, (nombre_producto, nombre_producto))
+        producto_data = cur.fetchall()
+        cur.close()
+        print(nombre_producto)
 
-    return render_template('precio_aceite.html', aceite_data=aceite_data)
+        # Intenta obtener la URL de la imagen del primer supermercado disponible
+        imagen_url = None
+        if nombre_producto in DATA:
+            for supermercado in DATA[nombre_producto]:
+                imagen_url = DATA[nombre_producto][supermercado]['Imagenes']
+                if imagen_url:
+                    break
+
+        return render_template('precio_producto.html', producto_data=producto_data, nombre_producto=nombre_producto, imagen_url=imagen_url)
+    
+
 
 
 
