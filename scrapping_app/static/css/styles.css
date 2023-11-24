@@ -10845,3 +10845,26 @@ textarea.form-control-lg {
   background-color: #F47E31; /* Naranja al pasar el cursor o presionar */
   color: #ffffff; /* Color del texto al pasar el cursor o presionar */
 }
+
+.list-group-item:first-child {
+  font-weight: bold; /* Negrita */
+  font-size: 1.4em; /* Tamaño un poco más grande */
+  color: #000000; /* Color del texto */
+}
+
+.btn-naranja {
+  background-color: #ff8c00; /* Naranja */
+  color: white;
+}
+
+.btn-naranja:hover {
+  background-color: #3070D8; /* Azul claro */
+  color: white;
+}
+
+.btn-naranja:active {
+  background-color: #e65c00; /* Naranja oscuro */
+}
+
+
+

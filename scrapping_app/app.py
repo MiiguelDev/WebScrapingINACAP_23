@@ -83,20 +83,21 @@ def mostrar_producto(nombre_producto):
         """, (nombre_producto, nombre_producto))
         producto_data = cur.fetchall()
         cur.close()
-        print(nombre_producto)
 
-        # Intenta obtener la URL de la imagen del primer supermercado disponible
-        imagen_url = None
-        if nombre_producto in DATA:
-            for supermercado in DATA[nombre_producto]:
-                imagen_url = DATA[nombre_producto][supermercado]['Imagenes']
-                if imagen_url:
-                    break
+        producto_data_formateado = []
+        for supermercado, nombre_prod, precio, fecha in producto_data:
+            precio_formateado = f"{int(round(precio)):,.0f}".replace(",", ".")
+            link_supermercado = DATA[nombre_producto].get(supermercado, {}).get('Link', '#')
+            producto_data_formateado.append((supermercado, nombre_prod, precio_formateado, fecha, link_supermercado))
 
-        return render_template('precio_producto.html', producto_data=producto_data, nombre_producto=nombre_producto, imagen_url=imagen_url)
-    
+        descripcion_producto = descripciones.get(nombre_producto, 'Descripción no disponible.')
+        imagen_url = DATA[nombre_producto][supermercado]['Imagenes'] if nombre_producto in DATA else None
 
-
+        return render_template('precio_producto.html',
+                                producto_data=producto_data_formateado,
+                                nombre_producto=nombre_producto,
+                                descripcion_producto=descripcion_producto,
+                                imagen_url=imagen_url)
 
 
 if __name__ == '__main__':
