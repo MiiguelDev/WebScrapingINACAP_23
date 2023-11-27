@@ -203,6 +203,46 @@ def borrar_precio_actualizado(iid):
 
     # Encuentra y borra el dato en datos_a_insertar
     datos_a_insertar[:] = [(p_id, s_id, precio) for p_id, s_id, precio in datos_a_insertar if not (p_id == producto_id and s_id == supermercado_id)]
+    
+def iniciar_scrap(iid):
+    selected_item = tabla.focus()
+    valores = tabla.item(selected_item, 'values')
+    supermercado, producto = valores[0], valores[1]
+    info = DATA[producto][supermercado]
+
+    # Abrir el URL para scraping
+    abrir_url(info['Link'])
+
+    # Crear y mostrar la ventana de diálogo personalizada
+    dialog = CustomDialog(app, "Ingresar Precio", f"Ingrese el precio para {producto} en {supermercado}")
+    app.wait_window(dialog)
+
+    # Obtener el precio desde el diálogo
+    nuevo_precio = dialog.precio
+
+    if nuevo_precio is not None:
+        # Actualizar visualmente la tabla con el nuevo precio
+        tabla.item(selected_item, values=(supermercado, producto, valores[2], nuevo_precio))
+
+        # Añadir o actualizar el dato en la lista de datos a insertar
+        producto_id = obtener_id_producto(producto)
+        supermercado_id = obtener_id_supermercado(supermercado)
+        
+        # Encuentra el dato en datos_a_insertar o lo añade si es nuevo
+        encontrado = False
+        for i, (p_id, s_id, _) in enumerate(datos_a_insertar):
+            if p_id == producto_id and s_id == supermercado_id:
+                datos_a_insertar[i] = (producto_id, supermercado_id, nuevo_precio)
+                encontrado = True
+                break
+        
+        if not encontrado:
+            datos_a_insertar.append((producto_id, supermercado_id, nuevo_precio))
+
+        # Mostrar mensaje de confirmación
+        messagebox.showinfo("Confirmación", f"El precio para {producto} en {supermercado} ha sido actualizado a {nuevo_precio}")
+
+
 
 
 def mostrar_menu_contextual(event):
@@ -210,6 +250,7 @@ def mostrar_menu_contextual(event):
     iid = tabla.identify_row(event.y)
     if iid:
         tabla.selection_set(iid)
+        menu_contextual.add_command(label="Iniciar Scrap Individual", command=lambda: iniciar_scrap(iid))
         menu_contextual.add_command(label="Editar Precio Actualizado", command=lambda: editar_precio_actualizado(iid))
         menu_contextual.add_command(label="Borrar Precio Actualizado", command=lambda: borrar_precio_actualizado(iid))
         menu_contextual.tk_popup(event.x_root, event.y_root)
@@ -295,6 +336,10 @@ def mostrar_menu_principal():
     tabla.heading("Último Precio", text="Último Precio")
     tabla.heading("Precio Actualizado", text="Precio Actualizado")
     tabla.grid(row=0, column=1, sticky='nsew')
+    # Definir etiquetas con estilos
+    tabla.tag_configure('oddrow', background='white')
+    tabla.tag_configure('evenrow', background='#D1DEF1')
+
 
     # Configuración de la barra de desplazamiento
     scrollbar = ttk.Scrollbar(app, orient="vertical", command=tabla.yview)
@@ -314,10 +359,9 @@ def mostrar_menu_principal():
 
     tabla.bind("<Button-3>", mostrar_menu_contextual)
 
-
-
 def cargar_datos_iniciales():
     ultimos_precios = obtener_todos_los_ultimos_precios()
+    count = 0  # Contador para alternar las etiquetas
     for producto, supermercados in DATA.items():
         for supermercado in supermercados:
             producto_id = obtener_id_producto(producto)
@@ -328,8 +372,14 @@ def cargar_datos_iniciales():
             if ultimo_precio != 'N/A':
                 ultimo_precio = int(ultimo_precio)
 
-            tabla.insert('', 'end', values=(supermercado, producto, ultimo_precio, ""))
+            # Aplicar etiqueta según sea fila par o impar
+            if count % 2 == 0:
+                tabla.insert('', 'end', values=(supermercado, producto, ultimo_precio, ""), tags=('evenrow',))
+            else:
+                tabla.insert('', 'end', values=(supermercado, producto, ultimo_precio, ""), tags=('oddrow',))
 
+            count += 1
+            
 # En tu función principal o en la configuración inicial de la ventana
 app = tk.Tk()
 app.title("MartinMercado@ Software de Actualización de Precios V2.0")
