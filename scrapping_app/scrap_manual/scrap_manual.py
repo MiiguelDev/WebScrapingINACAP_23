@@ -13,9 +13,13 @@ from PIL import Image, ImageTk
 # Lista para almacenar datos temporalmente
 datos_a_insertar = []
 
+def cargar_datos_en_fondo():
+    # Carga los datos de la tabla aquí
+    cargar_datos_iniciales()
+
 def reiniciar_app():
     """ Pregunta al usuario antes de reiniciar el script de Python. """
-    respuesta = messagebox.askyesno("Reiniciar Aplicacion", "Se actualizara la app, cualquier dato no guardado se perdera. ¿Desea actualizar? NO LLORES LUEGO")
+    respuesta = messagebox.askyesno("Reiniciar Aplicacion", "Se actualizara la app, cualquier dato no guardado se perdera. ¿Desea actualizar? No hay vuelta atras")
     if respuesta:
         python = sys.executable
         os.execl(python, python, *sys.argv)
@@ -358,6 +362,18 @@ def mostrar_menu_principal():
     cargar_datos_iniciales()
 
     tabla.bind("<Button-3>", mostrar_menu_contextual)
+    
+def actualizar_gif(label, ruta_gif, frame=0):
+    try:
+        foto = tk.PhotoImage(file=ruta_gif, format=f"gif -index {frame}")
+        label.configure(image=foto)
+        label.image = foto
+        frame += 1
+    except tk.TclError:
+        frame = 0  # Reiniciar el GIF cuando alcanza el final
+    finally:
+        label.after(100, lambda: actualizar_gif(label, ruta_gif, frame))  # Continuar animación
+    
 
 def cargar_datos_iniciales():
     ultimos_precios = obtener_todos_los_ultimos_precios()
@@ -379,14 +395,92 @@ def cargar_datos_iniciales():
                 tabla.insert('', 'end', values=(supermercado, producto, ultimo_precio, ""), tags=('oddrow',))
 
             count += 1
-            
-# En tu función principal o en la configuración inicial de la ventana
-app = tk.Tk()
-app.title("MartinMercado@ Software de Actualización de Precios V2.2")
-# Establece la posición de la ventana en el tope de la pantalla (puedes ajustar la posición en x según lo necesites)
-app.geometry("720x770+0+0")
-app.configure(bg='white')
-icon = PhotoImage(file='scrapping_app/static/assets/favicon-32x32.png')
-app.iconphoto(False, icon)
-mostrar_menu_principal()
-app.mainloop()
+
+debe_continuar = True  # Una variable global para controlar el flujo del programa
+
+def cerrar_aplicacion():
+    global debe_continuar
+    debe_continuar = False  # Indica que la aplicación no debe continuar
+    app.quit()  # Cierra la ventana principal
+    app.destroy()  # Destruye la instancia de la app para cerrar completamente
+
+def mostrar_pantalla_pre_inicio(app):
+    pre_inicio = tk.Toplevel(app)
+    pre_inicio.title("Bienvenido al Sistema de Scraping de Precios v3.0")
+    pre_inicio.geometry("720x770+0+0")  # Tamaño de la ventana
+
+    # Asignar la acción de cierre de la ventana
+    pre_inicio.protocol("WM_DELETE_WINDOW", cerrar_aplicacion)
+
+    # Crear Canvas
+    canvas = tk.Canvas(pre_inicio, width=720, height=770)
+    canvas.pack()
+
+    # Cargar y redimensionar la imagen
+    original_img = Image.open("scrapping_app/scrap_manual/images/martin1.jpg")
+    resized_img = original_img.resize((720, 730), Image.Resampling.LANCZOS)  # Ajusta el tamaño según sea necesario
+    img = ImageTk.PhotoImage(resized_img)
+
+    # Configurar la imagen de fondo en la parte superior
+    canvas.create_image(360, 0, anchor='n', image=img)
+
+    # Coordenadas para centrar los botones en cada mitad de la pantalla
+    x_empezar = 720 / 4  # Centro de la primera mitad
+    x_salir = 720 * 3 / 4  # Centro de la segunda mitad
+    y_botones = 700  # Altura de los botones
+
+    # Botón para empezar
+    boton_empezar = tk.Button(pre_inicio, text="Empezar", command=pre_inicio.destroy, bg="#2D679A", fg="white", height=2, width=10, font=("Arial", 12))
+    boton_empezar_window = canvas.create_window(x_empezar, y_botones, anchor='center', window=boton_empezar)
+
+    # Botón para salir
+    boton_salir = tk.Button(pre_inicio, text="Salir", command=cerrar_aplicacion, bg="#ED7034", fg="white", height=2, width=10, font=("Arial", 12))
+    boton_salir_window = canvas.create_window(x_salir, y_botones, anchor='center', window=boton_salir)
+
+    # Mantener una referencia a la imagen en el Canvas para evitar que se recolecte como basura
+    canvas.image = img
+
+    app.wait_window(pre_inicio)
+
+# Método create_rounded_rectangle no es nativo de Tkinter, se debe agregar
+def _create_rounded_rectangle(self, x1, y1, x2, y2, radius=25, **kwargs):
+    points = [x1+radius, y1,
+              x1+radius, y1,
+              x2-radius, y1,
+              x2-radius, y1,
+              x2, y1,
+              x2, y1+radius,
+              x2, y1+radius,
+              x2, y2-radius,
+              x2, y2-radius,
+              x2, y2,
+              x2-radius, y2,
+              x2-radius, y2,
+              x1+radius, y2,
+              x1+radius, y2,
+              x1, y2,
+              x1, y2-radius,
+              x1, y2-radius,
+              x1, y1+radius,
+              x1, y1+radius,
+              x1, y1]
+    return self.create_polygon(points, **kwargs, smooth=True)
+
+tk.Canvas.create_rounded_rectangle = _create_rounded_rectangle
+
+if __name__ == "__main__":  
+    app = tk.Tk()
+    app.title("MartinMercado@ Software de Actualización de Precios v3.0")
+    # Establece la posición de la ventana en el tope de la pantalla (puedes ajustar la posición en x según lo necesites)
+    app.geometry("720x770+0+0")
+    app.configure(bg='white')
+    icon = PhotoImage(file='scrapping_app/static/assets/favicon-32x32.png')
+    app.iconphoto(False, icon)
+    # Mostrar la pantalla de pre-inicio
+    mostrar_pantalla_pre_inicio(app)
+
+    # Verificar si se debe continuar con la ejecución de la aplicación
+    if debe_continuar:
+        mostrar_menu_principal()
+
+    app.mainloop()
