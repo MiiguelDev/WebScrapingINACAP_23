@@ -1,6 +1,31 @@
-Esta carpeta contiene varios archivos para manipular la base de datos. 
+Manual de Usuario: Manipulación de la Base de Datos
+Este manual provee instrucciones detalladas sobre cómo utilizar los diversos scripts incluidos en la carpeta para gestionar y manipular la base de datos de 'comparacion_precios'.
 
-test_con: Realiza varias operaciones para asegurarse que la base de datos esta activa y contiene valores validos 
-insert_data: Realiza la insercion de 30 valores en los supermercados y productos que trabajamos actualmente, este es necesario
-para poder insertar datos posteriormente.
-clean_tables: Limpiara la bd solo dejando las tablas y su estructura, usar solo de ser necesario.
+Archivos en la Carpeta
+test_con.py - Prueba de Conexión a la Base de Datos
+
+Este script realiza varias operaciones para asegurarse de que la base de datos esté activa y contenga valores válidos. Se encarga de verificar la conectividad con la base de datos y de comprobar si las tablas existentes contienen los datos esperados. Su uso es esencial para validar el estado operativo de la base de datos antes de proceder con otras operaciones.
+
+Cómo usar:
+
+Ejecutar el script desde la línea de comandos.
+Revisar la salida en la consola para confirmar la conectividad y el estado de los datos.
+insert_data.py - Inserción de Datos
+
+Este script inserta 30 registros en las tablas de supermercados y productos. Es necesario ejecutar este script para poblar la base de datos con datos iniciales, lo que permite realizar operaciones de inserción de datos adicionales más adelante.
+
+Cómo usar:
+
+Ejecutar el script para insertar los datos iniciales.
+Verificar que los registros se hayan insertado correctamente en la base de datos.
+clean_tables.py - Limpieza de Tablas
+
+Este script se utiliza para limpiar la base de datos, eliminando todos los registros de las tablas pero manteniendo su estructura. Este procedimiento es útil para reiniciar la base de datos a un estado limpio, pero debe usarse con precaución, ya que borrará todos los datos existentes.
+
+Cómo usar:
+
+Ejecutar el script solo cuando sea necesario reiniciar la base de datos.
+Tener en cuenta que esta acción eliminará todos los registros existentes.
+Notas Adicionales
+Asegúrese de tener los permisos necesarios para ejecutar estos scripts.
+Realice siempre copias de seguridad de sus datos antes de ejecutar operaciones que puedan modificar o eliminar datos, especialmente antes de usar clean_tables.py.
