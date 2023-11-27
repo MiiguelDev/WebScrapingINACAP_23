@@ -382,7 +382,7 @@ def cargar_datos_iniciales():
             
 # En tu función principal o en la configuración inicial de la ventana
 app = tk.Tk()
-app.title("MartinMercado@ Software de Actualización de Precios V2.0")
+app.title("MartinMercado@ Software de Actualización de Precios V2.2")
 # Establece la posición de la ventana en el tope de la pantalla (puedes ajustar la posición en x según lo necesites)
 app.geometry("720x770+0+0")
 app.configure(bg='white')
