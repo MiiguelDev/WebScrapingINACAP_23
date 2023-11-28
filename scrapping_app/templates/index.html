@@ -100,9 +100,9 @@
                   <!-- Product actions -->
                   <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center">
-                        <a class="btn custom-btn-light-blue mt-auto" target="_blank" href="{{ product_data.link }}">Ir a la web de {{product_data.supermercado }}</a>
+                        <a class="btn custom-btn-light-blue mt-auto" target="_blank" rel="noopener noreferrer" href="{{ product_data.link }}">Ir a la web de {{product_data.supermercado }}</a>
                         <!-- Botón para ver todas las ofertas -->
-                        <a class="btn custom-btn-light-orange mt-2" target="_blank" href="{{ url_for('mostrar_producto', nombre_producto=product_data.nombre_producto) }}">Ver todas las ofertas</a>
+                        <a class="btn custom-btn-light-orange mt-2" target="_blank" rel="noopener noreferrer" href="{{ url_for('mostrar_producto', nombre_producto=product_data.nombre_producto) }}">Ver todas las ofertas</a>
                     </div>
                 </div>
              </div>
