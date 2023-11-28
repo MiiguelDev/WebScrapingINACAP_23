@@ -1,62 +1,66 @@
-# Este script inserta datos de prueba en la base de datos comparacion_precios
-
 import mysql.connector
+from mysql.connector import Error
 
-# Establecer la conexión con la base de datos
-conexion = mysql.connector.connect(
-    host="3.22.156.122",
-    user="scrapy",
-    password="Inacap2023#",
-    database="comparacion_precios"
-)
+def create_db_connection(host_name, user_name, user_password, db_name):
+    try:
+        connection = mysql.connector.connect(
+            host=host_name,
+            user=user_name,
+            password=user_password,
+            database=db_name
+        )
+        return connection
+    except Error as err:
+        print(f"Error: '{err}'")
+        return None
 
-# Crear el cursor para ejecutar las consultas
-cursor = conexion.cursor()
+def execute_query(connection, query, data=None):
+    try:
+        cursor = connection.cursor()
+        if data:
+            cursor.executemany(query, data)
+        else:
+            cursor.execute(query)
+        connection.commit()
+        cursor.close()
+    except Error as err:
+        print(f"Error: '{err}'")
 
-# Insertar registros de supermercados con números correlativos
-supermercados = [
-    (1, 'Lider'),
-    (2, 'Jumbo'),
-    (3, 'Santa Isabel'),
-    (4, 'Cugat')
-]
+def main():
+    # Detalles de la conexión
+    host = "3.22.156.122"
+    user = "scrapy"
+    password = "Inacap2023#"
+    database = "comparacion_precios"
 
-insert_supermercado_query = "INSERT INTO supermercado (super_id, super_nombre) VALUES (%s, %s)"
-cursor.executemany(insert_supermercado_query, supermercados)
-conexion.commit()
+    # Crear conexión a la base de datos
+    connection = create_db_connection(host, user, password, database)
+    if connection is None:
+        return
 
-# Insertar registros de productos con números correlativos
-# Asegúrate de que los IDs de los nuevos productos continúen la secuencia de los ya existentes.
-productos = [
-    (1, 'Aceite'),
-    (2, 'Azucar'),
-    (3, 'Atun'),
-    (4, 'Lavalozas'),
-    (5, 'Agua'),
-    (6, 'Te'),
-    (7, 'Mantequilla'),
-    (8, 'Leche'),
-    (9, 'Lenteja'),
-    (10, 'Salchichas')
-]
+    # Insertar registros de supermercados
+    insert_supermercado_query = "INSERT INTO supermercado (super_id, super_nombre) VALUES (%s, %s)"
+    supermercados = [(1, 'Lider'), (2, 'Jumbo'), (3, 'Santa Isabel'), (4, 'Cugat')]
+    execute_query(connection, insert_supermercado_query, supermercados)
 
-insert_producto_query = "INSERT INTO producto (producto_id, producto_nombre) VALUES (%s, %s)"
-cursor.executemany(insert_producto_query, productos)
-conexion.commit()
+    # Insertar registros de productos
+    insert_producto_query = "INSERT INTO producto (producto_id, producto_nombre) VALUES (%s, %s)"
+    productos = [(i, nombre) for i, nombre in enumerate(['Aceite', 'Azucar', 'Atun', 'Lavalozas', 'Agua', 'Te', 'Mantequilla', 'Leche', 'Lenteja', 'Salchichas'], start=1)]
+    execute_query(connection, insert_producto_query, productos)
 
-# Insertar registros en la tabla historial_precios para los nuevos productos
-# Asegúrate de actualizar el número total de productos y supermercados si estos cambian.
-insert_historial_precios_query = """
-INSERT INTO historial_precios (super_id, producto_id, precio, fecha_hora)
-SELECT s.super_id, p.producto_id, 1000 + (s.super_id * 10) + p.producto_id, NOW()
-FROM (SELECT super_id FROM supermercado) s
-CROSS JOIN (SELECT producto_id FROM producto) p
-"""
+    # Insertar registros en historial_precios
+    insert_historial_precios_query = """
+    INSERT INTO historial_precios (super_id, producto_id, precio, fecha_hora)
+    SELECT s.super_id, p.producto_id, 1000 + (s.super_id * 10) + p.producto_id, NOW()
+    FROM (SELECT super_id FROM supermercado) s
+    CROSS JOIN (SELECT producto_id FROM producto) p
+    """
+    execute_query(connection, insert_historial_precios_query)
 
-cursor.execute(insert_historial_precios_query)
-conexion.commit()
+    # Cerrar la conexión
+    connection.close()
 
-# Cerrar la conexión y el cursor
-cursor.close()
-conexion.close()
+if __name__ == "__main__":
+    main()
+
 
