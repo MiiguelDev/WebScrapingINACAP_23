@@ -70,7 +70,7 @@
                     <ul class="list-group flex-fill">
                         {% for supermercado, nombre_prod, precio, fecha, link in producto_data %}
                         <li class="list-group-item" style="height: 3rem;">
-                            <a href="{{ link }}" target="_blank" class="btn btn-naranja d-flex align-items-center justify-content-center h-100">Ir a la web</a>
+                            <a href="{{ link }}" target="_blank" rel="noopener noreferrer" class="btn btn-naranja d-flex align-items-center justify-content-center h-100">Ir a la web</a>
                         </li>
                         {% endfor %}
                     </ul>
