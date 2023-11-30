@@ -2,16 +2,20 @@ from flask import Flask, render_template
 from flask_mysqldb import MySQL
 from scrap_manual.data import DATA
 from descripcion import descripciones
+from dotenv import load_dotenv
+import os
 
+# Cargo las variables de entorno desde el archivo .env
+load_dotenv()
 
 
 app = Flask(__name__)
 
-# Configuración de la base de datos
-app.config['MYSQL_HOST'] = '3.22.156.122'
-app.config['MYSQL_USER'] = 'scrapy'
-app.config['MYSQL_PASSWORD'] = 'Inacap2023#'
-app.config['MYSQL_DB'] = 'comparacion_precios'
+# Configuración de la base de datos usando variables de entorno
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
 
 mysql = MySQL(app)
 
